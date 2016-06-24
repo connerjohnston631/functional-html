@@ -26,6 +26,6 @@ Once you have build all of your elements, add them to a top element like so:
 <code> document.getElementById(my_destination_element_id).innerHTML = generate(top_div);</code>
 
 This may seem like a lot at first (standard html for the helloworld example would be easier),
-but once you create the instances of the h1 element, you can reuse and build upon these 
-elements to create more detailed elements
+but once you create the instances of elements, you can reuse and build upon these 
+elements to create more complex, detailed elements
 
