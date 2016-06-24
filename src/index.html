@@ -16,6 +16,12 @@
 			var center = clss(emptyElement(), ['text-center']);
 			var jumbotron = clss(lbl(emptyElement(), 'div'), ['jumbotron']);
 			var footer = clss(lbl(emptyElement(), 'div'), ['page-footer']);
+			var row = attrbts(lbl(emptyElement(), 'div'), {'class': 'row'});
+			var container = attrbts(lbl(emptyElement(), 'div'), {'class': 'container'});
+			var colSm3 = attrbts(lbl(emptyElement(), 'div'), {'class': 'col-sm-3'});
+
+			/* future library functions */
+			function genLink(url){ return attrbts(lbl(emptyElement(), 'a'), {'href': url}); }
 
 			/* header */
 			var hello = cntnt(lbl(center, 'h1'), ('HELLO, WORLD!'));
@@ -23,23 +29,21 @@
 			var my_jumbotron = chldrn(jumbotron, [hello, details]);
 
 			/* footer */
-			var github = chldrn(lbl(center, 'a'), [cntnt(lbl(center, 'h3'), 'GitHub')]);
+			var github = chldrn(genLink('http://www.github.com/connerjohnston631/'), [cntnt(lbl(center, 'h3'), 'GitHub')]);
 			var my_footer = chldrn(footer, [cntnt(lbl(center, 'h3'),'This project was started on June 22nd, 2016, and is available on:'), github]);
 
 			/* center columns */
-			var colSm3 = attrbts(lbl(emptyElement(), 'div'), {'class': 'col-sm-3'});
 			var p = lbl(emptyElement(), 'p');
 			var cenH4 = lbl(center, 'h4');
+			/* custom function for generating columns */
 			function generateCol(title, content){ return chldrn(colSm3, [cntnt(cenH4, title), cntnt(p, content)]); }
-			var left = generateCol('WHAT IS THIS?', '...a javascript wrapper for HTML written functionally for functional programmers to streamline development and generate minimal, readable, working code using functional coding paradigms');
-			var center_left = generateCol('HOW TO USE THIS?', 'by visiting this site, you have obtained the source code. You can also check out the project on github (link below) for code and README');
-			var center_right = generateCol('WHATS TO COME?', 'Rule-checking, function generation scripts, CSS generation, multiple classes for Bootstrap, user-defined style inheritance, integration into Node.js');
+			var left = generateCol('WHAT IS THIS?', '...a javascript wrapper for HTML written functionally for functional programmers to streamline development and generate minimal, readable, working html and javascript code using functional coding paradigms');
+			var center_left = generateCol('HOW TO USE THIS?', 'by visiting this site, you have obtained the source code. You can also check out the project on github (link below) for code and use the README for instructions');
+			var center_right = generateCol('WHATS TO COME?', 'Integration into Node.js, automatic generation and assignment of IDs for dynamic page generation (i.e, on change, generate specific portion of html), and constants for labels, attributes, and classes');
 			var right = generateCol('WHO AM I?', '...a member of the open source community. Enjoy!');
-			var row = attrbts(lbl(emptyElement(), 'div'), {'class': 'row'});
 			var rows = chldrn(row, [left, center_left, center_right, right]);
 
 			/* top div */
-			var container = attrbts(lbl(emptyElement(), 'div'), {'class': 'container'});
 			var top_div = chldrn(container, [my_jumbotron, rows, my_footer]);
 
 			document.getElementById('generation_destination').innerHTML = generate(top_div);

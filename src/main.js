@@ -10,13 +10,12 @@ const EQUALS = '=';
 const TAB = '\t';
 const CLASS = 'class';
 
-
 /* html objects (things surrounded by tags, like a div) will have: 
  * {label, classes, attributes, content, list of inner objects}. This will
  * be referred to as an element. also need to include content in between tags... 
  */
 function bracketize(tag){
-	return LEFT_BRACKET + tag + RIGHT_BRACKET;
+	return [LEFT_BRACKET, tag, RIGHT_BRACKET].join(EMPTY_STRING);
 }
 
 function classStr(classes){
