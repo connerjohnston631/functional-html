@@ -11,23 +11,36 @@
 		</div>
 		<script type="text/javascript">
 			console.log('here');
-			var hello = textCenter(h1('HELLO, WORLD!'));
-			var details = textCenter(h3('This is a JS based HTML generator for functional (and object-oriented, I suppose) programmers'));
-			var main_div = add_children(jumbotron(), [hello, details]);
 
-			var header = add_children(pageHeader(), [textCenter(h1('THIS IS A HEADER'))]);
-			
-			var github = add_children(lnk('https://github.com/connerjohnston631/functional-html', ''), [h3('GitHub')]);
+			/* functions for boostrap element classes */
+			var center = clss(emptyElement(), ['text-center']);
+			var jumbotron = clss(lbl(emptyElement(), 'div'), ['jumbotron']);
+			var footer = clss(lbl(emptyElement(), 'div'), ['page-footer']);
 
-			var footer = add_children(pageFooter(), [textCenter(h3('This project was started on June 22nd, 2016, and is available on:')), textCenter(github)]);
+			/* header */
+			var hello = cntnt(lbl(center, 'h1'), ('HELLO, WORLD!'));
+			var details = cntnt(lbl(center, 'h3'), 'This is a JS based HTML generator for functional (and object-oriented, I suppose) programmers');
+			var my_jumbotron = chldrn(jumbotron, [hello, details]);
 
-			var left = add_children(smGrid(3), [textCenter(h4('WHAT IS THIS?')), p('...a javascript wrapper for HTML written functionally for functional programmers to streamline development and generate minimal, readable, working code using functional coding paradigms')]);
-			var center_left = add_children(smGrid(3), [textCenter(h4('HOW TO USE THIS?')), p('by visiting this site, you have obtained the source code. You can also check out the project on github (link below) for code and README')]);
-			var center_right = add_children(smGrid(3), [textCenter(h4('WHATS TO COME?')), p('Rule-checking, function generation scripts, CSS generation, multiple classes for Bootstrap, user-defined style inheritance, integration into Node.js')]);
-			var right = add_children(smGrid(3), [textCenter(h4('WHO AM I?')), p('...a member of the open source community. Enjoy!')]);
-			var rows = add_children(row(), [left, center_left, center_right, right]);
+			/* footer */
+			var github = chldrn(lbl(center, 'a'), [cntnt(lbl(center, 'h3'), 'GitHub')]);
+			var my_footer = chldrn(footer, [cntnt(lbl(center, 'h3'),'This project was started on June 22nd, 2016, and is available on:'), github]);
 
-			var top_div = add_children(div(), [header, main_div, rows, footer]);
+			/* center columns */
+			var colSm3 = attrbts(lbl(emptyElement(), 'div'), {'class': 'col-sm-3'});
+			var p = lbl(emptyElement(), 'p');
+			var cenH4 = lbl(center, 'h4');
+			function generateCol(title, content){ return chldrn(colSm3, [cntnt(cenH4, title), cntnt(p, content)]); }
+			var left = generateCol('WHAT IS THIS?', '...a javascript wrapper for HTML written functionally for functional programmers to streamline development and generate minimal, readable, working code using functional coding paradigms');
+			var center_left = generateCol('HOW TO USE THIS?', 'by visiting this site, you have obtained the source code. You can also check out the project on github (link below) for code and README');
+			var center_right = generateCol('WHATS TO COME?', 'Rule-checking, function generation scripts, CSS generation, multiple classes for Bootstrap, user-defined style inheritance, integration into Node.js');
+			var right = generateCol('WHO AM I?', '...a member of the open source community. Enjoy!');
+			var row = attrbts(lbl(emptyElement(), 'div'), {'class': 'row'});
+			var rows = chldrn(row, [left, center_left, center_right, right]);
+
+			/* top div */
+			var container = attrbts(lbl(emptyElement(), 'div'), {'class': 'container'});
+			var top_div = chldrn(container, [my_jumbotron, rows, my_footer]);
 
 			document.getElementById('generation_destination').innerHTML = generate(top_div);
 			console.log('here here');
