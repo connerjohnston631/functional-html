@@ -2,6 +2,7 @@
 <html lang="en-US">
 	<head id="head">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://guides.github.com/components/primer/octicons.css">
 		<script src="../js/main.js"></script>
 		<script src="../js/elements.js"></script>
 	</head>
@@ -12,14 +13,17 @@
 
 			/* functions for boostrap element classes */
 			var center = clss(emptyElement(), ['text-center']);
+			var centerBlock = clss(emptyElement(), ['center-block']);
 			var jumbotron = clss(lbl(emptyElement(), 'div'), ['jumbotron']);
 			var footer = clss(lbl(emptyElement(), 'div'), ['page-footer']);
 			var row = clss(lbl(emptyElement(), 'div'), ['row']);
 			var container = clss(lbl(emptyElement(), 'div'), ['container']);
 			var colSm3 = clss(lbl(emptyElement(), 'div'), ['col-sm-3']);
+			var colSm9 = clss(lbl(emptyElement(), 'div'), ['col-sm-9']);
+
 
 			/* future library functions */
-			function genLink(url){ return attrbts(lbl(emptyElement(), 'a'), {'href': url}); }
+			function genLink(element, url){ return attrbts(lbl(element, 'a'), {'href': url}); }
 
 			/* jumbotron */
 			var hello = cntnt(lbl(center, 'h1'), ('HELLO, WORLD!'));
@@ -27,8 +31,10 @@
 			var my_jumbotron = chldrn(jumbotron, [hello, details]);
 
 			/* footer */
-			var github = chldrn(genLink('http://www.github.com/connerjohnston631/functional-html'), [cntnt(lbl(center, 'h3'), 'GitHub')]);
-			var my_footer = chldrn(footer, [cntnt(lbl(center, 'h3'),'This project was started on June 22nd, 2016, and is available on:'), github]);
+			var github = chldrn(genLink(emptyElement(), 'http://www.github.com/connerjohnston631/functional-html'), [clss(lbl(emptyElement(), 'span'), ['mega-octicon', 'octicon-mark-github', 'center'])]);
+			var github_div = attrbts(chldrn(lbl(centerBlock, 'div'), [github]),{'style': 'width: 0px;'});
+			var footer_text = cntnt(lbl(center, 'h3'),'This project was started on June 22nd, 2016');
+			var my_footer = chldrn(footer, [github_div, footer_text]);
 
 			/* center columns */
 			var p = lbl(emptyElement(), 'p');
