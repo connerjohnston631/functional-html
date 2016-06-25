@@ -60,7 +60,7 @@
 
 			var button = attrbts(cntnt(clss(lbl(emptyElement(), 'button'), ['btn', 'btn-primary', 'btn-sm', 'pull-right']), 'generate'), {'onclick': 'generateFromConsole()'});
 
-			var title = cntnt(lbl(emptyElement(), 'h5'), 'try it in the console');
+			var title = cntnt(lbl(emptyElement(), 'h5'), '...try it in the console:');
 			var title_bar = chldrn(row, [chldrn(colSm6, [title]), chldrn(colSm6, [button])]);
 			var consol = chldrn(clss(lbl(emptyElement(), 'div'), ['form-group']), [textArea]);
 			document.getElementById('user_console').innerHTML = generate(chldrn(container, [title_bar, consol]));
