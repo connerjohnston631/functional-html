@@ -7,7 +7,7 @@ const children = 'children';
 
 function emptyElement(){
 	/* add checks for validation here */
-	return {label: '', classes: [], attributes: {}, content: '', children: []};
+	return {label: EMPTY_STRING, classes: [], attributes: {}, content: EMPTY_STRING, children: []};
 }
 
 function lbl(element, str){

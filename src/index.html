@@ -4,32 +4,30 @@
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<script src="./main.js"></script>
 		<script src="./elements.js"></script>
-		
 	</head>
 	<body>
-		<div id="generation_destination">
+		<div id='generation_destination'>
 		</div>
-		<script type="text/javascript">
-			console.log('here');
+		<script type="text/javascript" id="top_script">
 
 			/* functions for boostrap element classes */
 			var center = clss(emptyElement(), ['text-center']);
 			var jumbotron = clss(lbl(emptyElement(), 'div'), ['jumbotron']);
 			var footer = clss(lbl(emptyElement(), 'div'), ['page-footer']);
-			var row = attrbts(lbl(emptyElement(), 'div'), {'class': 'row'});
-			var container = attrbts(lbl(emptyElement(), 'div'), {'class': 'container'});
-			var colSm3 = attrbts(lbl(emptyElement(), 'div'), {'class': 'col-sm-3'});
+			var row = clss(lbl(emptyElement(), 'div'), ['row']);
+			var container = clss(lbl(emptyElement(), 'div'), ['container']);
+			var colSm3 = clss(lbl(emptyElement(), 'div'), ['col-sm-3']);
 
 			/* future library functions */
 			function genLink(url){ return attrbts(lbl(emptyElement(), 'a'), {'href': url}); }
 
-			/* header */
+			/* jumbotron */
 			var hello = cntnt(lbl(center, 'h1'), ('HELLO, WORLD!'));
 			var details = cntnt(lbl(center, 'h3'), 'This is a JS based HTML generator for functional (and object-oriented, I suppose) programmers');
 			var my_jumbotron = chldrn(jumbotron, [hello, details]);
 
 			/* footer */
-			var github = chldrn(genLink('http://www.github.com/connerjohnston631/'), [cntnt(lbl(center, 'h3'), 'GitHub')]);
+			var github = chldrn(genLink('http://www.github.com/connerjohnston631/functional-html'), [cntnt(lbl(center, 'h3'), 'GitHub')]);
 			var my_footer = chldrn(footer, [cntnt(lbl(center, 'h3'),'This project was started on June 22nd, 2016, and is available on:'), github]);
 
 			/* center columns */
@@ -38,16 +36,34 @@
 			/* custom function for generating columns */
 			function generateCol(title, content){ return chldrn(colSm3, [cntnt(cenH4, title), cntnt(p, content)]); }
 			var left = generateCol('WHAT IS THIS?', '...a javascript wrapper for HTML written functionally for functional programmers to streamline development and generate minimal, readable, working html and javascript code using functional coding paradigms');
-			var center_left = generateCol('HOW TO USE THIS?', 'by visiting this site, you have obtained the source code. You can also check out the project on github (link below) for code and use the README for instructions');
+			var center_left = generateCol('HOW TO USE THIS?', 'by visiting this site, you have obtained the source code. You can also check out the project on github (link below) for code and use the README for instructions. The code to describe this top part of the page is in the console below. Changes made will be reflected when the generate button is pressed.');
 			var center_right = generateCol('WHATS TO COME?', 'Integration into Node.js, automatic generation and assignment of IDs for dynamic page generation (i.e, on change, generate specific portion of html), and constants for labels, attributes, and classes');
 			var right = generateCol('WHO AM I?', '...a member of the open source community. Enjoy!');
 			var rows = chldrn(row, [left, center_left, center_right, right]);
 
-			/* top div */
-			var top_div = chldrn(container, [my_jumbotron, rows, my_footer]);
+			/* generate wrapped in top div */
+			document.getElementById('generation_destination').innerHTML = generate(chldrn(container, [my_jumbotron, rows, my_footer]));
+		</script>
+		<div id="user_console">
+		</div>
+		<script>
+			/* building the attributes can use other attributes by accessing elements the old fashioned way as well... */
+			var textArea = cntnt(attrbts(clss(lbl(emptyElement(), 'textarea'), ['form-control']), {'rows' : '15', 'id' : 'console_text'}), document.getElementById('top_script').innerHTML);
 
-			document.getElementById('generation_destination').innerHTML = generate(top_div);
-			console.log('here here');
+			function generateFromConsole(){
+				/* shove the code written into a script div, then execute it */
+				document.getElementById('top_script').innerHTML = document.getElementById('console_text').value;
+				eval(document.getElementById('top_script').innerHTML);
+			}
+
+			var colSm6 = clss(lbl(emptyElement(), 'div'), ['col-sm-6']);
+
+			var button = attrbts(cntnt(clss(lbl(emptyElement(), 'button'), ['btn', 'btn-primary', 'btn-sm', 'pull-right']), 'generate'), {'onclick': 'generateFromConsole()'});
+
+			var title = cntnt(lbl(emptyElement(), 'h5'), 'try it in the console');
+			var title_bar = chldrn(row, [chldrn(colSm6, [title]), chldrn(colSm6, [button])]);
+			var consol = chldrn(clss(lbl(emptyElement(), 'div'), ['form-group']), [textArea]);
+			document.getElementById('user_console').innerHTML = generate(chldrn(container, [title_bar, consol]));
 		</script>
 	</body>
 </html>
