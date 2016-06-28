@@ -3,32 +3,18 @@
 	<head id="head">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://guides.github.com/components/primer/octicons.css">
-		<script src="../js/main.js"></script>
+		<script src="../js/generate.js"></script>
 		<script src="../js/elements.js"></script>
+		<script src="../js/lib/html.js"></script>
+		<script src='../js/lib/bootstrap.js'></script>
 	</head>
 	<body>
 		<div id='generation_destination'>
 		</div>
 		<script type="text/javascript" id="top_script">
 
-/* general html elements */
-var div = withLabel(emptyElement(), 'div');
-var p = withLabel(emptyElement(), 'p');
-var h1 = withLabel(emptyElement(), 'h1');
-var h3 = withLabel(emptyElement(), 'h3');
-var h4 = withLabel(emptyElement(), 'h4');
-var span = withLabel(emptyElement(), 'span');
-
-/* future library functions */
+/* future library helper functions */
 function createLink(element, url){ return withAttributes(withLabel(element, 'a'), {'href': url}); }
-
-/* variables functions for boostrap element classes */
-var jumbotron = withClass(div, ['jumbotron']);
-var footer = withClass(div, ['page-footer']);
-var row = withClass(div, ['row']);
-var container = withClass(div, ['container']);
-var colSm3 = withClass(div, ['col-sm-3']);
-var colSm9 = withClass(div, ['col-sm-9']);
 
 /* custom function for generating columns based on number of elements */
 /* user must provide column divs in list form. The label will be changed to div regardless */
@@ -41,53 +27,48 @@ function autoCols(columns, size){
 	return columns.length <= 12 ? helper(columns, 12, []) : '';
 }
 
-function textCenter(element){ return withMoreClasses(element, ['text-center']); }
-function centerBlock(element){ return withMoreClasses(element, ['center-block']); }
-
 /* jumbotron */
-var hello = withContent(textCenter(h1), ('HELLO, WORLD!'));
-var details = withContent(textCenter(h3), 'This is a JS based HTML generator for functional (and object-oriented, I suppose) programmers');
-var my_jumbotron = withChildren(jumbotron, [hello, details]);
+var hello = withStyles(withContent(_bsApplyTextCenter(_h1()), 'HELLO, WORLD!'), {'color': 'purple'});
+var details = withContent(_bsApplyTextCenter(_h3()), 'This is a JS based HTML generator for functional programmers');
+var my_jumbotron = withStyles(withChildren(_bsJumbotron(), [hello, details]), {'background-color': 'lightblue'});
 
 /* footer */
-var github = withChildren(createLink(emptyElement(), 'http://www.github.com/connerjohnston631/functional-html'), [withClass(span, ['mega-octicon', 'octicon-mark-github'])]);
-var github_div = withAttributes(withChildren(centerBlock(div), [github]),{'style': 'width: 32px;'});
-var footer_text = withContent(textCenter(h3), 'This project was started on June 22nd, 2016');
-var my_footer = withChildren(footer, [github_div, footer_text]);
+var github = withChild(createLink(emptyElement(), 'http://www.github.com/connerjohnston631/functional-html'), withClasses(_span(), ['mega-octicon', 'octicon-mark-github']));
+var github_div = withStyles(withChild(_bsCenterBlock(), github),{'width': '32px'});
+var footer_text = withContent(_bsApplyTextCenter(_h3()), 'This project was started on June 22nd, 2016');
+var my_footer = withChildren(_bsPageFooter(), [github_div, footer_text]);
 
 /* custom function for generating divs with a title and content */
-function customDiv(title, content){ return withChildren(div, [withContent(textCenter(h4), title), withContent(p, content)]); }
-
+function customDiv(title, content){ return withChildren(_div(), [withContent(_bsApplyTextCenter(_h4()), title), withContent(_p(), content)]); }
 var left = customDiv('WHAT IS THIS?', '...a javascript wrapper for HTML written functionally for functional programmers using functional coding paradigms');
 var center_left = customDiv('HOW TO USE THIS?', 'Create HTML elements by adding  a label, as well as content, attributes, and child elements, to an emptyElement(). Check out the console below!');
 var center_right = customDiv('WHATS TO COME?', 'Integration into Node.js, automatic assignment of ID\'s, libraries of helper functions for html5 and bootstrap development');
 var right = customDiv('WHO AM I?', '...a member of the open source community. Enjoy!');
-
-var rows = withChildren(row, autoCols([left, center_left, center_right, right], 'sm'));
+var rows = withChildren(_bsRow(), autoCols([left, center_left, center_right, right], 'sm'));
 
 /* generate wrapped in top div */
-document.getElementById('generation_destination').innerHTML = generate(withChildren(container, [my_jumbotron, rows, my_footer]));
+document.getElementById('generation_destination').innerHTML = generate(withChildren(_bsContainerFluid(), [my_jumbotron, rows, my_footer]));
+
 		</script>
 		<div id="user_console">
 		</div>
 		<script>
 			/* building the attributes can use other attributes by accessing elements the old fashioned way as well... */
-			var textArea = withAttributes(withChildren(withLabel(emptyElement(), 'code'), [withContent(withAttributes(withClass(withLabel(emptyElement(), 'textarea'), ['form-control']), {'rows' : '15', 'id' : 'console_text', 'style': 'background-color: black;'}), String(document.getElementById('top_script').innerHTML))]), {'spellcheck': 'false'});
+			var innerTextArea = withContent(withStyles(withAttributes(withClass(_textarea(), 'form-control'), {'rows' : '15', 'id' : 'console_text'}), {'background-color': 'black'}), String(document.getElementById('top_script').innerHTML));
+			var outerTextArea = withAttributes(withChildren(_code(), [innerTextArea]), {'spellcheck': 'false'});
 
 			function generateFromConsole(){
 				/* shove the code written into a script div, then execute it */
-				document.getElementById('top_script').innerHTML = document.getElementById('console_text').value;
+				document.getElementById('top_script').innerHTML = document.getElementById(getId(innerTextArea)).value;
 				eval(document.getElementById('top_script').innerHTML);
 			}
 
-			var colSm6 = withClass(withLabel(emptyElement(), 'div'), ['col-sm-6']);
+			var button = withAttributes(withContent(withClasses(_button(), ['btn', 'btn-primary', 'btn-sm', 'pull-right']), 'generate'), {'onclick': 'generateFromConsole()'});
 
-			var button = withAttributes(withContent(withClass(withLabel(emptyElement(), 'button'), ['btn', 'btn-primary', 'btn-sm', 'pull-right']), 'generate'), {'onclick': 'generateFromConsole()'});
-
-			var title = withContent(withLabel(emptyElement(), 'h5'), '...try it in the console:');
-			var title_bar = withChildren(row, [withChildren(colSm6, [title]), withChildren(colSm6, [button])]);
-			var consol = withChildren(withClass(withLabel(emptyElement(), 'div'), ['form-group']), [textArea]);
-			document.getElementById('user_console').innerHTML = generate(withChildren(container, [title_bar, consol]));
+			var title = withContent(_h5(), '...try it in the console:');
+			var title_bar = withChildren(_bsRow(), [withChild(_bsColSm6(), title), withChild(_bsColSm6(), button)]);
+			var consol = withChild(withClass(_div(), 'form-group'), outerTextArea);
+			document.getElementById('user_console').innerHTML = generate(withChildren(_bsContainerFluid(), [title_bar, consol]));
 		</script>
 	</body>
 </html>
