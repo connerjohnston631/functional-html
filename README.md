@@ -5,37 +5,20 @@ The html elements are represented as objects with mappings for a label, classes,
 inner content, and child elements. Creation of the elements is up to the user's discretion
 on whether or not to use all of the fields, as the naming of the labels is not enforced.
 
-To create an html tag, we must generate an emtpyElement() as our starting point:
+To generate standard html elements, prefix the element name with a '_' and append with (), 
+as the elements are returned from functions.
+Here is an example of displaying hello world in an h1 using the html library.
 
-<code>var element = emptyElement();</code>
+<code> var helloworld = withContent(_h1(), 'Hello World'); </code>
 
-Once we have this, we can add a label to it:
+<code> document.getElementById(my_destination_element_id).innerHTML = generate(helloworld);</code>
 
-<code>var h1 = lbl(element, 'h1');</code>
+Elements that are Bootstrap-friendly can be built (using 'bs' as the bootstrap library prefix);
+they are the classes used in the css styling, so the label gets appended as a class to the div or 
+other base html the bootstrap class is desired for.
 
-...And some content:
+To put the helloworld variable into a jumbotron object: 
 
-<code>var helloworld = cntnt(h1, 'hello world!');</code>
-
-Once you have build all of your elements, add them to a top element like so:
-
-<code>var top_div = chldrn(lbl(emptyElement(), 'div'), [helloworld]);</code>
-
-...And set the inner html of the desired destination to be the generated html:
-
-<code> document.getElementById(my_destination_element_id).innerHTML = generate(top_div);</code>
-
-This may seem like a lot at first (standard html for the helloworld example would be easier),
-but once you create the instances of elements, you can reuse and build upon these 
-elements to create more complex, detailed elements.
-
-Elements that are Bootstrap-friendly can be built:
-
-<code>var jumbotron = clss(lbl(emptyElement(), 'div'), ['jumbotron']);</code>
-
-And we can set the top element to be a jumbotron with helloworld: 
-
-<code>top_div = chldrn(top_div, [chldrn(jumbotron, [helloworld])]);
-document.getElementById(my_destination_element_id).innerHTML = generate(top_div);</code>
+<code> document.getElementById(my_destination_element_id).innerHTML = generate(withChild(_bsJumbotron(), helloworld));</code>
 
 
