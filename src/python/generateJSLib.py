@@ -43,7 +43,7 @@ def generateHtmlDotJs():
 
 def generateBootstrapDotJs():
 	bootstrapFunctionPrefix = 'bs'
-	bootstrapDivElements = ['container', 'container-fluid', 'row', 'pull-right', 'pull-left', \
+	bootstrapDivClasses = ['container', 'container-fluid', 'row', 'pull-right', 'pull-left', \
 		'center-block', 'page-footer', 'text-center', 'jumbotron']
 
 	printHeaderString()
@@ -62,7 +62,7 @@ def generateBootstrapDotJs():
 	def bootstrapApplyFunctionString(name):
 		return functionString(bootstrapFunctionPrefix, 'Apply' + bootstrapNameHelper(name), ['element'], functionStringHelper('withAnotherClass', ['element', quoteWrapper(name)]))
 
-	for elem in bootstrapDivElements:
+	for elem in bootstrapDivClasses:
 		print bootstrapFunctionString(elem)
 		print bootstrapApplyFunctionString(elem)
 

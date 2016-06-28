@@ -1,0 +1,18 @@
+This file is responsible for generating the javascript libraries. To add 
+a library, add lists of functions that are generated with a common parent function.
+Generate the parent function, and generate the child functions via for loop.
+For now, the program is invoked by using 
+
+$python generateJSLib.py > ../js/lib/bootstrap.js
+
+and can be changed to generate the html library by changing the bottom line to 
+
+generateHtmlDotJs().
+
+and calling 
+
+$python generateJSLib.py > ../js/lib/html.js
+
+For now, this is a little hacky, but it works well for extending libraries with ease.
+The next iteration will have the files predetermined and the generator for each file
+specified in separate files.
